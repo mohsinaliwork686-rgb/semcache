@@ -57,7 +57,7 @@ the questions, and the benchmark shows how to pick it.
 
 | Day | Work | |
 |-----|------|-|
-| Mon | Plan and README | done |
+| Mon | Plan, README, package and CI | done |
 | Tue | The labelled questions, the cache, the in-memory store | |
 | Wed | Embeddings, the Redis store | |
 | Thu | The benchmark and its chart, CI | |
