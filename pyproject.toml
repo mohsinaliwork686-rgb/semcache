@@ -1,0 +1,48 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "semcache"
+version = "0.1.0"
+description = "A semantic cache for language-model calls, with a benchmark that shows where it starts giving wrong answers."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [{ name = "Mohsin Ali" }]
+keywords = ["llm", "cache", "semantic-cache", "embeddings", "redis", "benchmark"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+]
+dependencies = ["numpy>=1.26"]
+
+[project.optional-dependencies]
+# The local embedding model runs on ONNX Runtime, not PyTorch; see docs/IMPLEMENTATION_PLAN.md, section 7.
+local = ["fastembed>=0.7"]
+# Vector sets (VADD/VSIM) arrived in redis-py 6.0.
+redis = ["redis>=6"]
+bench = ["matplotlib>=3.8"]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[project.urls]
+Homepage = "https://github.com/mohsinaliwork686-rgb/semcache"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/semcache"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]

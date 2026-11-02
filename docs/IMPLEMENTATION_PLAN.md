@@ -50,6 +50,7 @@ The simple form wraps one function:
 ```python
 from semcache import semcache
 
+
 @semcache(threshold=0.9, ttl=3600)
 def ask(question: str, model: str = "small") -> str:
     return call_the_model(question, model)
@@ -60,13 +61,19 @@ When the cache is shared, or needs a Redis store, it is created once and used as
 ```python
 from semcache import SemanticCache, RedisStore
 
-cache = SemanticCache(threshold=0.9, ttl=3600, max_entries=10_000,
-                      store=RedisStore.from_url("redis://localhost:6379/0", name="support"))
+cache = SemanticCache(
+    threshold=0.9,
+    ttl=3600,
+    max_entries=10_000,
+    store=RedisStore.from_url("redis://localhost:6379/0", name="support"),
+)
+
 
 @cache.cached(on="question")
 async def ask(question: str, model: str = "small") -> str: ...
 
-cache.stats()   # hits, misses, evictions, expirations, errors...
+
+cache.stats()  # hits, misses, evictions, expirations, errors...
 ```
 
 Sync and async functions both work. `lookup()` and `store()` are public too, for code that cannot

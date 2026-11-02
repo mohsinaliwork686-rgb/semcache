@@ -32,6 +32,7 @@ A small Python library. One decorator wraps an existing function:
 ```python
 from semcache import semcache
 
+
 @semcache(threshold=0.9, ttl=3600)
 def ask(question: str, model: str = "small") -> str:
     return call_the_model(question, model)
