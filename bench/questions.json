@@ -1,0 +1,642 @@
+{
+  "about": "Support questions for a made-up online shop selling homeware and small electronics. Every question in an intent is answered by that intent's answer; questions in different intents need different answers. Written and labelled by reading, before any embedding code existed (docs/IMPLEMENTATION_PLAN.md, section 5a). Changes after the first run go in bench/CHANGES.md.",
+  "near_miss_kinds": {
+    "amount": "the same question about a different amount",
+    "negation": "the same question with a 'not' that flips the answer",
+    "swapped": "the same question about a different thing",
+    "timing": "the same question before or after something happens",
+    "same-verb": "the same verb about a different thing"
+  },
+  "intents": [
+    {
+      "id": "refund-policy-over-500",
+      "topic": "refunds",
+      "near_miss": {"kind": "amount", "pair": "refund-policy-under-50"},
+      "answer": "Orders over $500 are refunded once the returned items pass an inspection, within 10 days of reaching us.",
+      "questions": [
+        "What is your refund policy for orders over $500?",
+        "refund policy for orders above 500 dollars?",
+        "How do refunds work if my order was more than $500?",
+        "I spent over $500 on one order, what's the refund policy?",
+        "whats ur refund polcy for big orders over $500"
+      ]
+    },
+    {
+      "id": "refund-policy-under-50",
+      "topic": "refunds",
+      "near_miss": {"kind": "amount", "pair": "refund-policy-over-500"},
+      "answer": "Orders under $50 are refunded straight away, and you can keep the item.",
+      "questions": [
+        "What is your refund policy for orders under $50?",
+        "refund policy for orders below 50 dollars?",
+        "How do refunds work if my order was less than $50?",
+        "My order was under $50, what's the refund policy?",
+        "whats ur refund polcy for small orders under $50"
+      ]
+    },
+    {
+      "id": "free-shipping-over-35",
+      "topic": "shipping",
+      "near_miss": {"kind": "amount", "pair": "free-shipping-under-35"},
+      "answer": "Yes: orders of $35 or more ship free.",
+      "questions": [
+        "Do I get free shipping on orders over $35?",
+        "is shipping free if I spend more than $35",
+        "Free delivery on a $40 order?",
+        "My basket is over $35, do I still pay for shipping?",
+        "do orders above 35 dollars get free shiping"
+      ]
+    },
+    {
+      "id": "free-shipping-under-35",
+      "topic": "shipping",
+      "near_miss": {"kind": "amount", "pair": "free-shipping-over-35"},
+      "answer": "No: orders under $35 have a $4.99 shipping charge.",
+      "questions": [
+        "Do I get free shipping on orders under $35?",
+        "is shipping free if I spend less than $35",
+        "Free delivery on a $20 order?",
+        "My basket is under $35, do I still pay for shipping?",
+        "do orders below 35 dollars get free shiping"
+      ]
+    },
+    {
+      "id": "instalments-100",
+      "topic": "payments",
+      "near_miss": {"kind": "amount", "pair": "instalments-1000"},
+      "answer": "Paying in instalments starts at $250, so a $100 order is paid in full at checkout.",
+      "questions": [
+        "Can I pay for a $100 order in instalments?",
+        "can i split a 100 dollar order into payments",
+        "Is pay-in-4 available on a $100 purchase?",
+        "I want to spread the cost of a $100 order, can I?",
+        "instalments for an order of $100?"
+      ]
+    },
+    {
+      "id": "instalments-1000",
+      "topic": "payments",
+      "near_miss": {"kind": "amount", "pair": "instalments-100"},
+      "answer": "Yes: orders over $250, such as a $1,000 one, can be split into 4 interest-free payments.",
+      "questions": [
+        "Can I pay for a $1,000 order in instalments?",
+        "can i split a 1000 dollar order into payments",
+        "Is pay-in-4 available on a $1,000 purchase?",
+        "I want to spread the cost of a $1,000 order, can I?",
+        "instalments for an order of $1000?"
+      ]
+    },
+    {
+      "id": "return-used-item",
+      "topic": "refunds",
+      "near_miss": {"kind": "negation", "pair": "return-unused-item"},
+      "answer": "Used items can be returned within 30 days for store credit, not a refund to your card.",
+      "questions": [
+        "Can I return something I have used?",
+        "can i send back an item ive already used",
+        "I used the blender a few times, can I still return it?",
+        "Is it possible to return a used product?",
+        "returns on items that have been used?"
+      ]
+    },
+    {
+      "id": "return-unused-item",
+      "topic": "refunds",
+      "near_miss": {"kind": "negation", "pair": "return-used-item"},
+      "answer": "Unused items in their original packaging get a full refund within 30 days.",
+      "questions": [
+        "Can I return something I haven't used?",
+        "can i send back an item i never used",
+        "I never used the blender, can I return it?",
+        "Is it possible to return an unused product?",
+        "returns on items that have not been used?"
+      ]
+    },
+    {
+      "id": "marketing-emails-subscribe",
+      "topic": "accounts",
+      "near_miss": {"kind": "negation", "pair": "marketing-emails-unsubscribe"},
+      "answer": "Tick 'Send me offers' under Account > Preferences, or sign up at the bottom of any page.",
+      "questions": [
+        "I want to get your marketing emails",
+        "How do I sign up for your offers emails?",
+        "please add me to your promotional emails",
+        "I'd like to receive emails about your deals",
+        "how to subscribe to newsletter"
+      ]
+    },
+    {
+      "id": "marketing-emails-unsubscribe",
+      "topic": "accounts",
+      "near_miss": {"kind": "negation", "pair": "marketing-emails-subscribe"},
+      "answer": "Press 'Unsubscribe' at the bottom of any email, or untick 'Send me offers' under Account > Preferences.",
+      "questions": [
+        "I don't want to get your marketing emails",
+        "How do I stop your offers emails?",
+        "please remove me from your promotional emails",
+        "I'd like to stop receiving emails about your deals",
+        "how to unsubscribe from newsletter"
+      ]
+    },
+    {
+      "id": "cant-login-know-password",
+      "topic": "accounts",
+      "near_miss": {"kind": "negation", "pair": "cant-login-forgot-password"},
+      "answer": "After 5 failed attempts an account locks for 15 minutes; wait, then sign in with the code we text you.",
+      "questions": [
+        "I know my password but I can't log in",
+        "my password is correct but it wont let me sign in",
+        "I'm typing the right password and still can't get into my account",
+        "Can't log in even though I remember my password",
+        "login keeps failing, and I'm sure the password is right"
+      ]
+    },
+    {
+      "id": "cant-login-forgot-password",
+      "topic": "accounts",
+      "near_miss": {"kind": "negation", "pair": "cant-login-know-password"},
+      "answer": "Press 'Forgot password' on the sign-in page and we'll email you a link to set a new one.",
+      "questions": [
+        "I don't know my password and I can't log in",
+        "i forgot my password and it wont let me sign in",
+        "I can't remember my password, how do I get into my account?",
+        "Can't log in because I forgot my password",
+        "Forgot my password, how do I get back in?"
+      ]
+    },
+    {
+      "id": "app-iphone",
+      "topic": "accounts",
+      "near_miss": {"kind": "swapped", "pair": "app-android"},
+      "answer": "Search for the shop in the App Store; the app needs iOS 16 or later.",
+      "questions": [
+        "Where can I download the iPhone app?",
+        "is there an app for iphone",
+        "How do I get your app on my iPhone?",
+        "iOS app download link?",
+        "Do you have an app I can install on an iPhone"
+      ]
+    },
+    {
+      "id": "app-android",
+      "topic": "accounts",
+      "near_miss": {"kind": "swapped", "pair": "app-iphone"},
+      "answer": "Search for the shop on Google Play; the app needs Android 10 or later.",
+      "questions": [
+        "Where can I download the Android app?",
+        "is there an app for android",
+        "How do I get your app on my Android phone?",
+        "Android app download link?",
+        "Do you have an app I can install on a Samsung phone"
+      ]
+    },
+    {
+      "id": "return-online-order-in-store",
+      "topic": "refunds",
+      "near_miss": {"kind": "swapped", "pair": "return-store-purchase-by-post"},
+      "answer": "Yes: bring the item and your order email to any of our stores within 30 days.",
+      "questions": [
+        "Can I return an online order to a store?",
+        "can i take something i bought online back to a shop",
+        "I ordered on the website, can I return it in person at a store?",
+        "Return an online purchase in store?",
+        "Do your stores accept returns of items bought on the website?"
+      ]
+    },
+    {
+      "id": "return-store-purchase-by-post",
+      "topic": "refunds",
+      "near_miss": {"kind": "swapped", "pair": "return-online-order-in-store"},
+      "answer": "Yes: start a return under 'In-store purchases' with your receipt number, and we'll email you a free postage label.",
+      "questions": [
+        "Can I return a store purchase by post?",
+        "can i send something i bought in a shop back by mail",
+        "I bought it in a store, can I return it online instead?",
+        "Return an in-store purchase by mail?",
+        "Do you accept postal returns of items bought in your stores?"
+      ]
+    },
+    {
+      "id": "refund-time-paypal",
+      "topic": "refunds",
+      "near_miss": {"kind": "swapped", "pair": "refund-time-card"},
+      "answer": "Refunds to PayPal arrive within 24 hours of the return being approved.",
+      "questions": [
+        "How long does a refund to PayPal take?",
+        "when will my paypal refund show up",
+        "I paid with PayPal, how long until I get my money back?",
+        "paypal refund how many days",
+        "How quickly are refunds sent back to a PayPal account?"
+      ]
+    },
+    {
+      "id": "refund-time-card",
+      "topic": "refunds",
+      "near_miss": {"kind": "swapped", "pair": "refund-time-paypal"},
+      "answer": "Refunds to a credit or debit card take 5 to 7 working days after the return is approved.",
+      "questions": [
+        "How long does a refund to a credit card take?",
+        "when will my card refund show up",
+        "I paid by card, how long until I get my money back?",
+        "credit card refund how many days",
+        "How quickly are refunds sent back to a debit card?"
+      ]
+    },
+    {
+      "id": "cancel-before-shipping",
+      "topic": "orders",
+      "near_miss": {"kind": "timing", "pair": "cancel-after-shipping"},
+      "answer": "Yes: open Orders, pick the order and press Cancel; you're refunded in full.",
+      "questions": [
+        "Can I cancel my order before it ships?",
+        "how do i cancel an order that hasnt shipped yet",
+        "My order hasn't been dispatched, can I still cancel it?",
+        "cancel order before dispatch",
+        "I want to cancel, the order is still processing"
+      ]
+    },
+    {
+      "id": "cancel-after-shipping",
+      "topic": "orders",
+      "near_miss": {"kind": "timing", "pair": "cancel-before-shipping"},
+      "answer": "A shipped order can't be cancelled; refuse the delivery, or return it free within 30 days.",
+      "questions": [
+        "Can I cancel my order after it ships?",
+        "how do i cancel an order that has already shipped",
+        "My order has been dispatched, can I still cancel it?",
+        "cancel order after dispatch",
+        "I want to cancel but the order is already on its way"
+      ]
+    },
+    {
+      "id": "address-change-before-payment",
+      "topic": "orders",
+      "near_miss": {"kind": "timing", "pair": "address-change-after-payment"},
+      "answer": "Edit the address on the checkout page before you press Pay.",
+      "questions": [
+        "Can I change my delivery address before paying?",
+        "how do i change the shipping address before i pay",
+        "I'm at checkout and need a different delivery address",
+        "Change delivery address before payment?",
+        "I entered the wrong address at checkout but haven't paid yet"
+      ]
+    },
+    {
+      "id": "address-change-after-payment",
+      "topic": "orders",
+      "near_miss": {"kind": "timing", "pair": "address-change-before-payment"},
+      "answer": "For an hour after paying, change it under Orders > Edit address; after that, contact us before it ships.",
+      "questions": [
+        "Can I change my delivery address after paying?",
+        "how do i change the shipping address after i paid",
+        "I already paid but need a different delivery address",
+        "Change delivery address after payment?",
+        "I entered the wrong address and already paid for the order"
+      ]
+    },
+    {
+      "id": "delivery-time-new-order",
+      "topic": "shipping",
+      "near_miss": {"kind": "timing", "pair": "order-late"},
+      "answer": "Standard delivery takes 3 to 5 working days; the tracking link is in your dispatch email.",
+      "questions": [
+        "I ordered yesterday, when will it arrive?",
+        "how long does delivery take",
+        "I just placed an order, when should I expect it?",
+        "when will my new order get here",
+        "Placed an order this morning, what's the delivery time?"
+      ]
+    },
+    {
+      "id": "order-late",
+      "topic": "shipping",
+      "near_miss": {"kind": "timing", "pair": "delivery-time-new-order"},
+      "answer": "That's later than our 5-day promise: send us your order number and we'll trace it or send a replacement.",
+      "questions": [
+        "I ordered two weeks ago and it still hasn't arrived",
+        "my order is really late, its been 2 weeks",
+        "It's been over a week since I ordered and nothing has come",
+        "When will my order arrive? I ordered 15 days ago",
+        "order placed ages ago, still not delivered"
+      ]
+    },
+    {
+      "id": "cancel-membership",
+      "topic": "accounts",
+      "near_miss": {"kind": "same-verb", "pair": "cancel-return"},
+      "answer": "Open Account > Plus and press Cancel; you keep the benefits until the end of the paid period.",
+      "questions": [
+        "How do I cancel my Plus membership?",
+        "cancel my subscription please",
+        "I want to stop paying for Plus every month",
+        "How can I end my membership?",
+        "how to cancle plus subscription"
+      ]
+    },
+    {
+      "id": "cancel-return",
+      "topic": "refunds",
+      "near_miss": {"kind": "same-verb", "pair": "cancel-membership"},
+      "answer": "Open the return under Orders > Returns and press Cancel return, as long as you haven't posted the item.",
+      "questions": [
+        "How do I cancel a return?",
+        "I started a return but changed my mind, can I cancel it?",
+        "cancel my return request please",
+        "How can I stop a return I already set up?",
+        "how to cancle a return"
+      ]
+    },
+    {
+      "id": "change-password",
+      "topic": "accounts",
+      "near_miss": {"kind": "same-verb", "pair": "change-email"},
+      "answer": "Sign in and go to Account > Security > Change password.",
+      "questions": [
+        "How do I change my password?",
+        "how do i change my pasword in settings",
+        "Where do I update my password once I'm logged in?",
+        "change password",
+        "How can I set a different password on my account?"
+      ]
+    },
+    {
+      "id": "change-email",
+      "topic": "accounts",
+      "near_miss": {"kind": "same-verb", "pair": "change-password"},
+      "answer": "Go to Account > Details > Email; we send a link to the new address to confirm it.",
+      "questions": [
+        "How do I change my email address?",
+        "how do i change my emial in settings",
+        "Where do I update my email once I'm logged in?",
+        "change email",
+        "How can I use a different email address for my account?"
+      ]
+    },
+    {
+      "id": "track-order",
+      "topic": "orders",
+      "near_miss": {"kind": "same-verb", "pair": "track-refund"},
+      "answer": "Open Orders and press Track, or use the link in your dispatch email.",
+      "questions": [
+        "How do I track my order?",
+        "where can i see tracking for my parcel",
+        "Is there a tracking number for my order?",
+        "track my order",
+        "How can I follow my package's delivery?"
+      ]
+    },
+    {
+      "id": "track-refund",
+      "topic": "refunds",
+      "near_miss": {"kind": "same-verb", "pair": "track-order"},
+      "answer": "Open Orders > Returns to see your refund's status; we email you when it has been sent.",
+      "questions": [
+        "How do I track my refund?",
+        "where can i see the status of my refund",
+        "Is there a way to check on my refund?",
+        "track my refund",
+        "How can I follow my money back after a return?"
+      ]
+    },
+    {
+      "id": "guest-checkout",
+      "topic": "orders",
+      "answer": "Yes: choose 'Check out as a guest'; you can make an account afterwards.",
+      "questions": [
+        "Can I order without making an account?",
+        "do i need an account to buy something",
+        "Is guest checkout available?",
+        "I don't want to sign up, can I still place an order?",
+        "can i check out as a guest"
+      ]
+    },
+    {
+      "id": "order-confirmation-missing",
+      "topic": "orders",
+      "answer": "Check your spam folder; the order is still listed under Orders, and we can send the email again.",
+      "questions": [
+        "I didn't get an order confirmation email",
+        "no confirmation email after I ordered",
+        "Where is my order confirmation? Nothing in my inbox",
+        "never recieved the confirmation for my order",
+        "My order went through but I got no email"
+      ]
+    },
+    {
+      "id": "add-to-order",
+      "topic": "orders",
+      "answer": "A placed order can't be changed, but a second order placed within an hour ships with it for free.",
+      "questions": [
+        "Can I add an item to an order I already placed?",
+        "forgot something, can i add it to my order",
+        "How do I add more products to an existing order?",
+        "add item to order already placed",
+        "Is it possible to put another thing in my order after checkout?"
+      ]
+    },
+    {
+      "id": "download-invoice",
+      "topic": "orders",
+      "answer": "Open the order under Orders and press Download invoice.",
+      "questions": [
+        "How do I get an invoice for my order?",
+        "need a receipt for my purchase",
+        "Where can I download a tax invoice?",
+        "invoice for my order pls",
+        "Can I get a copy of the bill for something I bought?"
+      ]
+    },
+    {
+      "id": "ship-international",
+      "topic": "shipping",
+      "answer": "We ship to the United States and Canada only.",
+      "questions": [
+        "Do you ship to other countries?",
+        "do you deliver internationally",
+        "Can I order from the UK?",
+        "Which countries do you ship to?",
+        "international shipping available?"
+      ]
+    },
+    {
+      "id": "express-delivery",
+      "topic": "shipping",
+      "answer": "Yes: next-day delivery costs $9.99 for orders placed before 2pm.",
+      "questions": [
+        "Do you offer next-day delivery?",
+        "can I get it tomorrow",
+        "Is there an express shipping option?",
+        "how much is next day delivery",
+        "I need my order fast, what's the quickest delivery?"
+      ]
+    },
+    {
+      "id": "missed-delivery",
+      "topic": "shipping",
+      "answer": "The courier tries again the next working day, or you can pick a new day from the card they left.",
+      "questions": [
+        "I missed my delivery, what happens now?",
+        "i wasnt home when the courier came",
+        "The driver left a card saying they missed me",
+        "missed delivery, can it be redelivered?",
+        "What if I'm out when my parcel arrives?"
+      ]
+    },
+    {
+      "id": "delivered-not-received",
+      "topic": "shipping",
+      "answer": "Check around your home and with neighbours; if it hasn't turned up within 48 hours, tell us and we'll investigate.",
+      "questions": [
+        "Tracking says delivered but I don't have my parcel",
+        "it says delivered but nothing came",
+        "My package was marked as delivered and it isn't here",
+        "parcel shows delivered, not received",
+        "The app says my order was delivered but I never got it"
+      ]
+    },
+    {
+      "id": "payment-methods",
+      "topic": "payments",
+      "answer": "Credit and debit cards, PayPal, Apple Pay, Google Pay and our gift cards.",
+      "questions": [
+        "What payment methods do you accept?",
+        "can i pay with paypal",
+        "Which cards do you take?",
+        "Do you accept Apple Pay?",
+        "ways to pay?"
+      ]
+    },
+    {
+      "id": "promo-code-not-working",
+      "topic": "payments",
+      "answer": "Codes are case-sensitive, need their minimum spend and can't be combined; if all of that is fine, contact us.",
+      "questions": [
+        "My discount code isn't working",
+        "promo code says invalid",
+        "Why won't my voucher apply at checkout?",
+        "coupon code not working",
+        "I entered a code but the price didn't go down"
+      ]
+    },
+    {
+      "id": "gift-card-balance",
+      "topic": "payments",
+      "answer": "Enter the card number under Gift cards > Check balance.",
+      "questions": [
+        "How do I check my gift card balance?",
+        "how much is left on my gift card",
+        "Gift card balance?",
+        "Where can I see what's still on a gift voucher?",
+        "check giftcard balence"
+      ]
+    },
+    {
+      "id": "charged-twice",
+      "topic": "payments",
+      "answer": "A second charge is usually a temporary hold that disappears within 3 days; if it's still there, send us both transactions.",
+      "questions": [
+        "I was charged twice for one order",
+        "double charged on my card",
+        "Why do I see two payments for the same order?",
+        "you took the money twice",
+        "My bank shows a duplicate charge from you"
+      ]
+    },
+    {
+      "id": "price-match",
+      "topic": "payments",
+      "answer": "Yes: if a major retailer sells the same item for less within 14 days, we refund the difference.",
+      "questions": [
+        "Do you price match?",
+        "I found it cheaper somewhere else",
+        "Will you match a competitor's price?",
+        "price match policy",
+        "It's $20 less at another shop, can you match that?"
+      ]
+    },
+    {
+      "id": "delete-account",
+      "topic": "accounts",
+      "answer": "Go to Account > Privacy > Delete account; it's removed within 30 days.",
+      "questions": [
+        "How do I delete my account?",
+        "please close my account",
+        "I want to remove all my data and my account",
+        "delete account",
+        "How can I permanently get rid of my profile?"
+      ]
+    },
+    {
+      "id": "two-factor",
+      "topic": "accounts",
+      "answer": "Go to Account > Security > Two-step sign-in and add your phone number.",
+      "questions": [
+        "How do I turn on two-factor authentication?",
+        "set up 2fa",
+        "Can I get a code by text when I sign in?",
+        "enable two step verification",
+        "How do I make my account more secure with a login code?"
+      ]
+    },
+    {
+      "id": "damaged-item",
+      "topic": "refunds",
+      "answer": "Send a photo through Orders > Report a problem within 7 days, and we'll replace or refund it.",
+      "questions": [
+        "My item arrived damaged",
+        "the box was crushed and the lamp is broken",
+        "It came broken, what do I do?",
+        "received a damaged product",
+        "My order arrived with a crack in it"
+      ]
+    },
+    {
+      "id": "wrong-item",
+      "topic": "orders",
+      "answer": "Report it under Orders > Report a problem; we'll send the right item and a free label for the wrong one.",
+      "questions": [
+        "I received the wrong item",
+        "you sent me the wrong thing",
+        "This isn't what I ordered",
+        "got a different product than the one I bought",
+        "The parcel had someone else's item in it"
+      ]
+    },
+    {
+      "id": "warranty-length",
+      "topic": "product-care",
+      "answer": "Electronics have a 2-year warranty, and homeware has 1 year.",
+      "questions": [
+        "How long is the warranty on electronics?",
+        "whats the warranty on a toaster",
+        "Are my headphones guaranteed for one year or two?",
+        "warranty period for electrical items",
+        "How many years of cover do I get on a speaker?"
+      ]
+    },
+    {
+      "id": "cast-iron-care",
+      "topic": "product-care",
+      "answer": "Rinse with hot water, dry it on the hob and rub in a little oil; no dishwasher and no soaking.",
+      "questions": [
+        "How do I clean a cast iron pan?",
+        "can my cast iron skillet go in the dishwasher",
+        "Best way to wash cast iron?",
+        "cleaning a cast iron frying pan",
+        "My cast iron pan is sticky, how should I care for it?"
+      ]
+    },
+    {
+      "id": "descale-kettle",
+      "topic": "product-care",
+      "answer": "Boil half water and half white vinegar, leave it for an hour, then rinse twice.",
+      "questions": [
+        "How do I descale my kettle?",
+        "theres white stuff inside my kettle",
+        "Removing limescale from a kettle?",
+        "how to clean limescale out of the kettle",
+        "My kettle has chalky buildup, how do I get rid of it?"
+      ]
+    }
+  ]
+}
