@@ -92,6 +92,19 @@ class SemanticCache:
         """Store an answer to this question under `key`."""
         self._put(question, value, key, vector=None)
 
+    def cached(self, on: str | Callable | None = None) -> Callable:
+        """Decorate a function so its results are cached here.
+
+        `on` names the argument matched by meaning, and defaults to the first. Every other
+        argument must match exactly: the same question to another model, or with another
+        system prompt, never gets that call's answer.
+        """
+        from .decorator import wrap
+
+        if callable(on):  # Used bare, as @cache.cached
+            return wrap(self, on, None)
+        return lambda func: wrap(self, func, on)
+
     def stats(self) -> Stats:
         with self._lock:
             return Stats(**self._counts)
