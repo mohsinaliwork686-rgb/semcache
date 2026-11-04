@@ -114,10 +114,11 @@ def test_the_statistics_add_up():
     assert stats.hit_rate == pytest.approx(2 / 3)
 
 
-def test_an_embedder_returning_the_wrong_shape_is_caught():
+def test_an_embedder_returning_the_wrong_shape_is_counted_as_an_error(caplog):
     cache = SemanticCache(threshold=0.9, embedder=lambda texts: np.zeros(4))
-    with pytest.raises(ValueError, match="shape"):
-        cache.store("q", "answer")
+    cache.store("q", "answer")
+    assert cache.stats().errors == 1
+    assert "returned shape (4,)" in caplog.text
 
 
 def test_clear_forgets_the_answers_but_keeps_the_statistics():

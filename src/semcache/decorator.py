@@ -74,11 +74,12 @@ def wrap(cache: SemanticCache, func: Callable, on: str | None) -> Callable:
             cache._count(skipped=1)
             return func(*args, **kwargs)
         question, key = call
-        hit, vector = cache._find(question, key)
-        if hit is not None:
-            return hit.value
+        found = cache._find(question, key)
+        if found.hit is not None:
+            return found.hit.value
         value = func(*args, **kwargs)
-        cache._put(question, value, key, vector)
+        if not found.failed:
+            cache._put(question, value, key, found.vector)
         return value
 
     wrapper.cache = cache

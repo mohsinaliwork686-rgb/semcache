@@ -1,10 +1,11 @@
 """The cache: an exact-text check first, then a search by meaning."""
 
+import logging
 import threading
 import time
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass, fields
-from typing import Any
+from typing import Any, NamedTuple
 
 import numpy as np
 from numpy.typing import ArrayLike
@@ -15,6 +16,8 @@ from .store import Entry, MemoryStore, Store
 
 # Anything that turns a list of strings into one vector per string.
 Embedder = Callable[[Sequence[str]], ArrayLike]
+
+log = logging.getLogger("semcache")
 
 
 @dataclass(frozen=True)
@@ -49,6 +52,14 @@ class Stats:
         return self.hits / lookups if lookups else 0.0
 
 
+class _Lookup(NamedTuple):
+    hit: Hit | None
+    # The question's vector, kept so storing the answer after a miss does not embed it twice.
+    vector: np.ndarray | None
+    # The cache itself failed, so the call should go ahead without it.
+    failed: bool = False
+
+
 class SemanticCache:
     """Returns a stored answer when a new question means the same as one already answered.
 
@@ -58,6 +69,9 @@ class SemanticCache:
     hit does not extend it. `max_entries` limits the whole cache; the least recently used
     answers are dropped to stay within it. `embedder` turns text into vectors; by default it is
     `LocalEmbedder`, the all-MiniLM-L6-v2 model, loaded on first use.
+
+    The cache never breaks a call. If the embedder or the store fails, a lookup is a miss and a
+    store does nothing; the error is counted in `stats()` and logged as a warning.
     """
 
     def __init__(
@@ -87,8 +101,7 @@ class SemanticCache:
 
     def lookup(self, question: str, key: str = "") -> Hit | None:
         """The stored answer for this question, or None. `key` must match exactly."""
-        hit, _ = self._find(question, key)
-        return hit
+        return self._find(question, key).hit
 
     def store(self, question: str, value: Any, key: str = "") -> None:
         """Store an answer to this question under `key`."""
@@ -115,21 +128,26 @@ class SemanticCache:
         """Remove every stored answer. The statistics are kept."""
         self._store.clear()
 
-    def _find(self, question: str, key: str) -> tuple[Hit | None, np.ndarray | None]:
-        # Also returns the question's vector, so storing the answer after a miss does not
-        # embed the same text twice.
+    def _find(self, question: str, key: str) -> _Lookup:
+        try:
+            return self._search(question, key)
+        except Exception as error:
+            self._failed("lookup", error)
+            return _Lookup(None, None, failed=True)
+
+    def _search(self, question: str, key: str) -> _Lookup:
         now = self._clock()
         entry = self._store.get_exact(key, question, now)
         if entry is not None:
             self._store.touch(entry, now)
             self._count(exact_hits=1)
-            return Hit(entry.value, entry.question, 1.0, exact=True), None
+            return _Lookup(Hit(entry.value, entry.question, 1.0, exact=True), None)
 
         # Defined rather than left to floating point: identical text can embed to a score of
         # 0.99999994, so "at least 1.0" would sometimes miss its own question.
         if self.threshold >= 1:
             self._count(misses=1)
-            return None, None
+            return _Lookup(None, None)
 
         vector = self._embed(question)
         found = self._store.search(key, vector, now)
@@ -137,11 +155,17 @@ class SemanticCache:
             entry, similarity = found
             self._store.touch(entry, now)
             self._count(semantic_hits=1)
-            return Hit(entry.value, entry.question, similarity, exact=False), vector
+            return _Lookup(Hit(entry.value, entry.question, similarity, exact=False), vector)
         self._count(misses=1)
-        return None, vector
+        return _Lookup(None, vector)
 
     def _put(self, question: str, value: Any, key: str, vector: np.ndarray | None) -> None:
+        try:
+            self._add(question, value, key, vector)
+        except Exception as error:
+            self._failed("store", error)
+
+    def _add(self, question: str, value: Any, key: str, vector: np.ndarray | None) -> None:
         if vector is None:
             vector = self._embed(question)
         now = self._clock()
@@ -161,6 +185,12 @@ class SemanticCache:
         if vectors.ndim != 2 or len(vectors) != 1:
             raise ValueError(f"the embedder returned shape {vectors.shape} for one question")
         return normalize(vectors[0])
+
+    def _failed(self, stage: str, error: Exception) -> None:
+        self._count(errors=1)
+        log.warning(
+            "semcache %s failed, so the call went ahead without the cache: %r", stage, error
+        )
 
     def _count(self, **amounts: int) -> None:
         with self._lock:
