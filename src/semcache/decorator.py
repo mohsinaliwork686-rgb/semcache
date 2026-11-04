@@ -1,5 +1,6 @@
 """Wrapping a function: finding the question among its arguments, and keying the rest."""
 
+import asyncio
 import functools
 import inspect
 import json
@@ -82,5 +83,23 @@ def wrap(cache: SemanticCache, func: Callable, on: str | None) -> Callable:
             cache._put(question, value, key, found.vector)
         return value
 
-    wrapper.cache = cache
-    return wrapper
+    @functools.wraps(func)
+    async def async_wrapper(*args: Any, **kwargs: Any) -> Any:
+        call = split(args, kwargs)
+        if call is None:
+            cache._count(skipped=1)
+            return await func(*args, **kwargs)
+        question, key = call
+        # Embedding and a Redis round trip block, so they run in a thread instead of stalling
+        # the event loop.
+        found = await asyncio.to_thread(cache._find, question, key)
+        if found.hit is not None:
+            return found.hit.value
+        value = await func(*args, **kwargs)
+        if not found.failed:
+            await asyncio.to_thread(cache._put, question, value, key, found.vector)
+        return value
+
+    chosen = async_wrapper if inspect.iscoroutinefunction(func) else wrapper
+    chosen.cache = cache
+    return chosen
