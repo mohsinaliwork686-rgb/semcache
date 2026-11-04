@@ -14,7 +14,7 @@ from .store import Store
 def semcache(
     *,
     threshold: float,
-    embedder: Embedder,
+    embedder: Embedder | None = None,
     ttl: float | None = None,
     max_entries: int | None = None,
     store: Store | None = None,

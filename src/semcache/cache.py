@@ -9,6 +9,7 @@ from typing import Any
 import numpy as np
 from numpy.typing import ArrayLike
 
+from .embedding import LocalEmbedder
 from .similarity import normalize
 from .store import Entry, MemoryStore, Store
 
@@ -55,14 +56,15 @@ class SemanticCache:
     default, because the right value depends on the embedding model and the questions; at 1.0
     only the exact same text matches. `ttl` is in seconds from when an answer is stored, and a
     hit does not extend it. `max_entries` limits the whole cache; the least recently used
-    answers are dropped to stay within it.
+    answers are dropped to stay within it. `embedder` turns text into vectors; by default it is
+    `LocalEmbedder`, the all-MiniLM-L6-v2 model, loaded on first use.
     """
 
     def __init__(
         self,
         *,
         threshold: float,
-        embedder: Embedder,
+        embedder: Embedder | None = None,
         ttl: float | None = None,
         max_entries: int | None = None,
         store: Store | None = None,
@@ -77,7 +79,7 @@ class SemanticCache:
         self.threshold = threshold
         self.ttl = ttl
         self.max_entries = max_entries
-        self._embedder = embedder
+        self._embedder = embedder if embedder is not None else LocalEmbedder()
         self._store = store if store is not None else MemoryStore()
         self._clock = clock
         self._lock = threading.Lock()
