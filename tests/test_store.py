@@ -1,18 +1,11 @@
-"""The suite every store must pass. Each test runs once per store."""
+"""The suite every store must pass. Each test runs once per store (the `store` fixture)."""
 
 import pytest
 
 from semcache.similarity import normalize
-from semcache.store import Entry, Evicted, MemoryStore
+from semcache.store import Entry, Evicted
 
 NOW = 1_000.0
-
-
-@pytest.fixture(params=[MemoryStore], ids=["memory"])
-def store(request):
-    store = request.param()
-    yield store
-    store.clear()
 
 
 def entry(question, vector, *, key="k", value=None, at=NOW, ttl=None):

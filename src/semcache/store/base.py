@@ -11,7 +11,11 @@ import numpy as np
 @dataclass(frozen=True, eq=False)
 class Entry:
     """One stored answer. `key` holds every argument except the question, as one string; only
-    entries with the same key are compared, so a different model never shares an answer."""
+    entries with the same key are compared, so a different model never shares an answer.
+
+    An entry read back from a store may come without its vector: `RedisStore` keeps vectors
+    inside Redis, and nothing that reads an entry needs it.
+    """
 
     key: str
     question: str
