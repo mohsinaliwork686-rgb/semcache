@@ -60,7 +60,7 @@ the questions, and the benchmark shows how to pick it.
 | Mon | Plan, README, package and CI | done |
 | Tue | The labelled questions, the cache, the in-memory store | done |
 | Wed | Embeddings, the Redis store | done |
-| Thu | The benchmark and its chart, CI | |
+| Thu | The benchmark and its chart, CI | done |
 | Fri | Publish | |
 
 ## Non-goals
