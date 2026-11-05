@@ -250,7 +250,14 @@ One test, in one CI job, loads the real model to prove the wiring works.
 | decorator | sync and async functions; the question found by name or position | a non-string question goes straight through; an exception from the function is not cached |
 | failure | Redis down or the embedder failing: the function still runs and the error is counted | the cache never raises into the caller's code |
 | concurrency | many threads hitting and storing at once | the statistics add up exactly afterwards |
-| benchmark | a tiny fixed set gives hand-worked hit and false-hit counts | a threshold sweep is monotonic where it must be: raising the threshold never adds hits |
+| benchmark | a tiny fixed set gives hand-worked hit and false-hit counts | every query is exactly one of a correct hit, a false hit or a miss; a replay with the same seed gives the same counts (changed 5 November, see below) |
+
+**Changed on Thursday 5 November.** The benchmark row first said "raising the threshold never
+adds hits". That is not true of a cache that stores only its misses: a higher threshold turns a
+hit into a miss, the question is then stored, and a later paraphrase can hit it. For example, with
+question 2 at 0.85 to question 1, and question 3 at 0.95 to question 2 but 0.75 to question 1, a
+threshold of 0.8 gives a hit for question 2 only, while 0.9 gives a hit for question 3 only. The
+row now tests what must hold instead.
 
 ## 11. Risks
 

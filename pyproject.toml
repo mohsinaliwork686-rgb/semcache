@@ -38,6 +38,8 @@ packages = ["src/semcache"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+# So the tests can import the benchmark in bench/, which is not part of the package.
+pythonpath = ["."]
 addopts = "-q"
 
 [tool.ruff]
@@ -46,3 +48,6 @@ src = ["src", "tests"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["bench", "semcache"]
