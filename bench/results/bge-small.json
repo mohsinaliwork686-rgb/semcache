@@ -1,0 +1,573 @@
+{
+  "model": "BAAI/bge-small-en-v1.5",
+  "questions": 250,
+  "runs": 5,
+  "embedding_ms_per_question": 37.33,
+  "simulated_model_call": {
+    "seconds": 1.0,
+    "dollars": 0.001
+  },
+  "first_false_hit_at": 0.99,
+  "machine": "Darwin x86_64, Python 3.12.12",
+  "fastembed": "0.9.1",
+  "thresholds": [
+    {
+      "threshold": 0.7,
+      "hit_rate": 0.8528,
+      "correct_hit_rate": 0.3576,
+      "false_hits_per_1000": 495.2,
+      "share_of_hits_wrong": 0.5806754221388368,
+      "missed_chances_per_1000": 20.8,
+      "seconds_saved": 203.8662870000673,
+      "dollars_saved": 0.2132,
+      "false_hits_per_1000_by_kind": {
+        "amount": 700.0,
+        "negation": 560.0,
+        "swapped": 606.6666666666666,
+        "timing": 766.6666666666666,
+        "same-verb": 540.0,
+        "none": 286.0
+      }
+    },
+    {
+      "threshold": 0.71,
+      "hit_rate": 0.8368,
+      "correct_hit_rate": 0.3648,
+      "false_hits_per_1000": 472.0,
+      "share_of_hits_wrong": 0.5640535372848948,
+      "missed_chances_per_1000": 33.6,
+      "seconds_saved": 199.8662870000673,
+      "dollars_saved": 0.2092,
+      "false_hits_per_1000_by_kind": {
+        "amount": 660.0,
+        "negation": 520.0,
+        "swapped": 600.0,
+        "timing": 673.3333333333334,
+        "same-verb": 626.6666666666666,
+        "none": 256.0
+      }
+    },
+    {
+      "threshold": 0.72,
+      "hit_rate": 0.8088,
+      "correct_hit_rate": 0.3872,
+      "false_hits_per_1000": 421.6,
+      "share_of_hits_wrong": 0.5212660731948566,
+      "missed_chances_per_1000": 48.8,
+      "seconds_saved": 192.8662870000673,
+      "dollars_saved": 0.2022,
+      "false_hits_per_1000_by_kind": {
+        "amount": 560.0,
+        "negation": 473.3333333333333,
+        "swapped": 546.6666666666666,
+        "timing": 613.3333333333334,
+        "same-verb": 560.0,
+        "none": 228.0
+      }
+    },
+    {
+      "threshold": 0.73,
+      "hit_rate": 0.7952,
+      "correct_hit_rate": 0.4096,
+      "false_hits_per_1000": 385.6,
+      "share_of_hits_wrong": 0.48490945674044267,
+      "missed_chances_per_1000": 53.6,
+      "seconds_saved": 189.46628700006733,
+      "dollars_saved": 0.1988,
+      "false_hits_per_1000_by_kind": {
+        "amount": 506.6666666666667,
+        "negation": 526.6666666666666,
+        "swapped": 426.6666666666667,
+        "timing": 606.6666666666666,
+        "same-verb": 440.0,
+        "none": 212.0
+      }
+    },
+    {
+      "threshold": 0.74,
+      "hit_rate": 0.772,
+      "correct_hit_rate": 0.404,
+      "false_hits_per_1000": 368.0,
+      "share_of_hits_wrong": 0.47668393782383417,
+      "missed_chances_per_1000": 73.6,
+      "seconds_saved": 183.6662870000673,
+      "dollars_saved": 0.193,
+      "false_hits_per_1000_by_kind": {
+        "amount": 486.6666666666667,
+        "negation": 453.3333333333333,
+        "swapped": 420.0,
+        "timing": 626.6666666666666,
+        "same-verb": 433.3333333333333,
+        "none": 194.0
+      }
+    },
+    {
+      "threshold": 0.75,
+      "hit_rate": 0.7592,
+      "correct_hit_rate": 0.4072,
+      "false_hits_per_1000": 352.0,
+      "share_of_hits_wrong": 0.4636459430979979,
+      "missed_chances_per_1000": 85.6,
+      "seconds_saved": 180.46628700006733,
+      "dollars_saved": 0.18980000000000002,
+      "false_hits_per_1000_by_kind": {
+        "amount": 513.3333333333334,
+        "negation": 480.0,
+        "swapped": 420.0,
+        "timing": 620.0,
+        "same-verb": 373.3333333333333,
+        "none": 158.0
+      }
+    },
+    {
+      "threshold": 0.76,
+      "hit_rate": 0.74,
+      "correct_hit_rate": 0.4192,
+      "false_hits_per_1000": 320.8,
+      "share_of_hits_wrong": 0.4335135135135135,
+      "missed_chances_per_1000": 100.0,
+      "seconds_saved": 175.6662870000673,
+      "dollars_saved": 0.185,
+      "false_hits_per_1000_by_kind": {
+        "amount": 500.0,
+        "negation": 440.0,
+        "swapped": 426.6666666666667,
+        "timing": 640.0,
+        "same-verb": 286.6666666666667,
+        "none": 114.0
+      }
+    },
+    {
+      "threshold": 0.77,
+      "hit_rate": 0.7232,
+      "correct_hit_rate": 0.4384,
+      "false_hits_per_1000": 284.8,
+      "share_of_hits_wrong": 0.3938053097345133,
+      "missed_chances_per_1000": 107.2,
+      "seconds_saved": 171.46628700006733,
+      "dollars_saved": 0.18080000000000002,
+      "false_hits_per_1000_by_kind": {
+        "amount": 446.6666666666667,
+        "negation": 400.0,
+        "swapped": 406.6666666666667,
+        "timing": 533.3333333333334,
+        "same-verb": 253.33333333333334,
+        "none": 100.0
+      }
+    },
+    {
+      "threshold": 0.78,
+      "hit_rate": 0.6928,
+      "correct_hit_rate": 0.4376,
+      "false_hits_per_1000": 255.2,
+      "share_of_hits_wrong": 0.3683602771362587,
+      "missed_chances_per_1000": 136.0,
+      "seconds_saved": 163.8662870000673,
+      "dollars_saved": 0.1732,
+      "false_hits_per_1000_by_kind": {
+        "amount": 446.6666666666667,
+        "negation": 406.6666666666667,
+        "swapped": 386.6666666666667,
+        "timing": 473.3333333333333,
+        "same-verb": 200.0,
+        "none": 64.0
+      }
+    },
+    {
+      "threshold": 0.79,
+      "hit_rate": 0.6712,
+      "correct_hit_rate": 0.4312,
+      "false_hits_per_1000": 240.0,
+      "share_of_hits_wrong": 0.3575685339690107,
+      "missed_chances_per_1000": 154.4,
+      "seconds_saved": 158.46628700006733,
+      "dollars_saved": 0.1678,
+      "false_hits_per_1000_by_kind": {
+        "amount": 486.6666666666667,
+        "negation": 400.0,
+        "swapped": 340.0,
+        "timing": 433.3333333333333,
+        "same-verb": 166.66666666666666,
+        "none": 52.0
+      }
+    },
+    {
+      "threshold": 0.8,
+      "hit_rate": 0.6576,
+      "correct_hit_rate": 0.4336,
+      "false_hits_per_1000": 224.0,
+      "share_of_hits_wrong": 0.340632603406326,
+      "missed_chances_per_1000": 160.0,
+      "seconds_saved": 155.06628700006732,
+      "dollars_saved": 0.16440000000000002,
+      "false_hits_per_1000_by_kind": {
+        "amount": 486.6666666666667,
+        "negation": 360.0,
+        "swapped": 293.3333333333333,
+        "timing": 406.6666666666667,
+        "same-verb": 160.0,
+        "none": 48.0
+      }
+    },
+    {
+      "threshold": 0.81,
+      "hit_rate": 0.6128,
+      "correct_hit_rate": 0.4216,
+      "false_hits_per_1000": 191.2,
+      "share_of_hits_wrong": 0.31201044386422977,
+      "missed_chances_per_1000": 199.2,
+      "seconds_saved": 143.8662870000673,
+      "dollars_saved": 0.1532,
+      "false_hits_per_1000_by_kind": {
+        "amount": 473.3333333333333,
+        "negation": 346.6666666666667,
+        "swapped": 273.3333333333333,
+        "timing": 360.0,
+        "same-verb": 66.66666666666667,
+        "none": 22.0
+      }
+    },
+    {
+      "threshold": 0.82,
+      "hit_rate": 0.5736,
+      "correct_hit_rate": 0.3952,
+      "false_hits_per_1000": 178.4,
+      "share_of_hits_wrong": 0.3110181311018131,
+      "missed_chances_per_1000": 236.8,
+      "seconds_saved": 134.06628700006732,
+      "dollars_saved": 0.1434,
+      "false_hits_per_1000_by_kind": {
+        "amount": 460.0,
+        "negation": 333.3333333333333,
+        "swapped": 253.33333333333334,
+        "timing": 353.3333333333333,
+        "same-verb": 66.66666666666667,
+        "none": 6.0
+      }
+    },
+    {
+      "threshold": 0.83,
+      "hit_rate": 0.5464,
+      "correct_hit_rate": 0.3776,
+      "false_hits_per_1000": 168.8,
+      "share_of_hits_wrong": 0.3089311859443631,
+      "missed_chances_per_1000": 260.0,
+      "seconds_saved": 127.26628700006731,
+      "dollars_saved": 0.1366,
+      "false_hits_per_1000_by_kind": {
+        "amount": 453.3333333333333,
+        "negation": 320.0,
+        "swapped": 253.33333333333334,
+        "timing": 326.6666666666667,
+        "same-verb": 40.0,
+        "none": 4.0
+      }
+    },
+    {
+      "threshold": 0.84,
+      "hit_rate": 0.5128,
+      "correct_hit_rate": 0.352,
+      "false_hits_per_1000": 160.8,
+      "share_of_hits_wrong": 0.31357254290171604,
+      "missed_chances_per_1000": 292.0,
+      "seconds_saved": 118.8662870000673,
+      "dollars_saved": 0.12819999999999998,
+      "false_hits_per_1000_by_kind": {
+        "amount": 433.3333333333333,
+        "negation": 326.6666666666667,
+        "swapped": 213.33333333333334,
+        "timing": 333.3333333333333,
+        "same-verb": 20.0,
+        "none": 4.0
+      }
+    },
+    {
+      "threshold": 0.85,
+      "hit_rate": 0.4712,
+      "correct_hit_rate": 0.3128,
+      "false_hits_per_1000": 158.4,
+      "share_of_hits_wrong": 0.3361629881154499,
+      "missed_chances_per_1000": 332.0,
+      "seconds_saved": 108.46628700006731,
+      "dollars_saved": 0.1178,
+      "false_hits_per_1000_by_kind": {
+        "amount": 400.0,
+        "negation": 300.0,
+        "swapped": 253.33333333333334,
+        "timing": 333.3333333333333,
+        "same-verb": 20.0,
+        "none": 4.0
+      }
+    },
+    {
+      "threshold": 0.86,
+      "hit_rate": 0.4328,
+      "correct_hit_rate": 0.2856,
+      "false_hits_per_1000": 147.2,
+      "share_of_hits_wrong": 0.34011090573012936,
+      "missed_chances_per_1000": 369.6,
+      "seconds_saved": 98.86628700006732,
+      "dollars_saved": 0.1082,
+      "false_hits_per_1000_by_kind": {
+        "amount": 393.3333333333333,
+        "negation": 286.6666666666667,
+        "swapped": 206.66666666666666,
+        "timing": 320.0,
+        "same-verb": 0.0,
+        "none": 6.0
+      }
+    },
+    {
+      "threshold": 0.87,
+      "hit_rate": 0.3776,
+      "correct_hit_rate": 0.2376,
+      "false_hits_per_1000": 140.0,
+      "share_of_hits_wrong": 0.3707627118644068,
+      "missed_chances_per_1000": 425.6,
+      "seconds_saved": 85.06628700006732,
+      "dollars_saved": 0.09440000000000001,
+      "false_hits_per_1000_by_kind": {
+        "amount": 360.0,
+        "negation": 266.6666666666667,
+        "swapped": 206.66666666666666,
+        "timing": 313.3333333333333,
+        "same-verb": 0.0,
+        "none": 6.0
+      }
+    },
+    {
+      "threshold": 0.88,
+      "hit_rate": 0.3504,
+      "correct_hit_rate": 0.2224,
+      "false_hits_per_1000": 128.0,
+      "share_of_hits_wrong": 0.365296803652968,
+      "missed_chances_per_1000": 452.8,
+      "seconds_saved": 78.26628700006731,
+      "dollars_saved": 0.0876,
+      "false_hits_per_1000_by_kind": {
+        "amount": 340.0,
+        "negation": 260.0,
+        "swapped": 160.0,
+        "timing": 306.6666666666667,
+        "same-verb": 0.0,
+        "none": 0.0
+      }
+    },
+    {
+      "threshold": 0.89,
+      "hit_rate": 0.2984,
+      "correct_hit_rate": 0.1752,
+      "false_hits_per_1000": 123.2,
+      "share_of_hits_wrong": 0.4128686327077748,
+      "missed_chances_per_1000": 504.8,
+      "seconds_saved": 65.26628700006731,
+      "dollars_saved": 0.0746,
+      "false_hits_per_1000_by_kind": {
+        "amount": 340.0,
+        "negation": 253.33333333333334,
+        "swapped": 106.66666666666667,
+        "timing": 326.6666666666667,
+        "same-verb": 0.0,
+        "none": 0.0
+      }
+    },
+    {
+      "threshold": 0.9,
+      "hit_rate": 0.2568,
+      "correct_hit_rate": 0.1496,
+      "false_hits_per_1000": 107.2,
+      "share_of_hits_wrong": 0.4174454828660436,
+      "missed_chances_per_1000": 544.8,
+      "seconds_saved": 54.86628700006732,
+      "dollars_saved": 0.06420000000000001,
+      "false_hits_per_1000_by_kind": {
+        "amount": 333.3333333333333,
+        "negation": 253.33333333333334,
+        "swapped": 73.33333333333333,
+        "timing": 233.33333333333334,
+        "same-verb": 0.0,
+        "none": 0.0
+      }
+    },
+    {
+      "threshold": 0.91,
+      "hit_rate": 0.2352,
+      "correct_hit_rate": 0.1344,
+      "false_hits_per_1000": 100.8,
+      "share_of_hits_wrong": 0.42857142857142855,
+      "missed_chances_per_1000": 566.4,
+      "seconds_saved": 49.46628700006731,
+      "dollars_saved": 0.0588,
+      "false_hits_per_1000_by_kind": {
+        "amount": 293.3333333333333,
+        "negation": 253.33333333333334,
+        "swapped": 26.666666666666668,
+        "timing": 266.6666666666667,
+        "same-verb": 0.0,
+        "none": 0.0
+      }
+    },
+    {
+      "threshold": 0.92,
+      "hit_rate": 0.188,
+      "correct_hit_rate": 0.0928,
+      "false_hits_per_1000": 95.2,
+      "share_of_hits_wrong": 0.5063829787234042,
+      "missed_chances_per_1000": 612.8,
+      "seconds_saved": 37.666287000067314,
+      "dollars_saved": 0.047,
+      "false_hits_per_1000_by_kind": {
+        "amount": 233.33333333333334,
+        "negation": 246.66666666666666,
+        "swapped": 26.666666666666668,
+        "timing": 286.6666666666667,
+        "same-verb": 0.0,
+        "none": 0.0
+      }
+    },
+    {
+      "threshold": 0.93,
+      "hit_rate": 0.1456,
+      "correct_hit_rate": 0.0736,
+      "false_hits_per_1000": 72.0,
+      "share_of_hits_wrong": 0.4945054945054945,
+      "missed_chances_per_1000": 654.4,
+      "seconds_saved": 27.066287000067312,
+      "dollars_saved": 0.0364,
+      "false_hits_per_1000_by_kind": {
+        "amount": 200.0,
+        "negation": 133.33333333333334,
+        "swapped": 0.0,
+        "timing": 266.6666666666667,
+        "same-verb": 0.0,
+        "none": 0.0
+      }
+    },
+    {
+      "threshold": 0.94,
+      "hit_rate": 0.1064,
+      "correct_hit_rate": 0.052,
+      "false_hits_per_1000": 54.4,
+      "share_of_hits_wrong": 0.5112781954887218,
+      "missed_chances_per_1000": 693.6,
+      "seconds_saved": 17.266287000067315,
+      "dollars_saved": 0.026600000000000002,
+      "false_hits_per_1000_by_kind": {
+        "amount": 166.66666666666666,
+        "negation": 100.0,
+        "swapped": 0.0,
+        "timing": 186.66666666666666,
+        "same-verb": 0.0,
+        "none": 0.0
+      }
+    },
+    {
+      "threshold": 0.95,
+      "hit_rate": 0.092,
+      "correct_hit_rate": 0.0416,
+      "false_hits_per_1000": 50.4,
+      "share_of_hits_wrong": 0.5478260869565217,
+      "missed_chances_per_1000": 708.0,
+      "seconds_saved": 13.666287000067314,
+      "dollars_saved": 0.023,
+      "false_hits_per_1000_by_kind": {
+        "amount": 166.66666666666666,
+        "negation": 100.0,
+        "swapped": 0.0,
+        "timing": 153.33333333333334,
+        "same-verb": 0.0,
+        "none": 0.0
+      }
+    },
+    {
+      "threshold": 0.96,
+      "hit_rate": 0.0608,
+      "correct_hit_rate": 0.0248,
+      "false_hits_per_1000": 36.0,
+      "share_of_hits_wrong": 0.5921052631578947,
+      "missed_chances_per_1000": 739.2,
+      "seconds_saved": 5.866287000067313,
+      "dollars_saved": 0.0152,
+      "false_hits_per_1000_by_kind": {
+        "amount": 133.33333333333334,
+        "negation": 100.0,
+        "swapped": 0.0,
+        "timing": 66.66666666666667,
+        "same-verb": 0.0,
+        "none": 0.0
+      }
+    },
+    {
+      "threshold": 0.97,
+      "hit_rate": 0.032,
+      "correct_hit_rate": 0.012,
+      "false_hits_per_1000": 20.0,
+      "share_of_hits_wrong": 0.625,
+      "missed_chances_per_1000": 768.0,
+      "seconds_saved": -1.3337129999326862,
+      "dollars_saved": 0.008,
+      "false_hits_per_1000_by_kind": {
+        "amount": 133.33333333333334,
+        "negation": 0.0,
+        "swapped": 0.0,
+        "timing": 33.333333333333336,
+        "same-verb": 0.0,
+        "none": 0.0
+      }
+    },
+    {
+      "threshold": 0.98,
+      "hit_rate": 0.016,
+      "correct_hit_rate": 0.0,
+      "false_hits_per_1000": 16.0,
+      "share_of_hits_wrong": 1.0,
+      "missed_chances_per_1000": 784.0,
+      "seconds_saved": -5.333712999932686,
+      "dollars_saved": 0.004,
+      "false_hits_per_1000_by_kind": {
+        "amount": 133.33333333333334,
+        "negation": 0.0,
+        "swapped": 0.0,
+        "timing": 0.0,
+        "same-verb": 0.0,
+        "none": 0.0
+      }
+    },
+    {
+      "threshold": 0.99,
+      "hit_rate": 0.012,
+      "correct_hit_rate": 0.0,
+      "false_hits_per_1000": 12.0,
+      "share_of_hits_wrong": 1.0,
+      "missed_chances_per_1000": 788.0,
+      "seconds_saved": -6.333712999932686,
+      "dollars_saved": 0.003,
+      "false_hits_per_1000_by_kind": {
+        "amount": 100.0,
+        "negation": 0.0,
+        "swapped": 0.0,
+        "timing": 0.0,
+        "same-verb": 0.0,
+        "none": 0.0
+      }
+    },
+    {
+      "threshold": 1.0,
+      "hit_rate": 0.0,
+      "correct_hit_rate": 0.0,
+      "false_hits_per_1000": 0.0,
+      "share_of_hits_wrong": 0.0,
+      "missed_chances_per_1000": 800.0,
+      "seconds_saved": -9.333712999932686,
+      "dollars_saved": 0.0,
+      "false_hits_per_1000_by_kind": {
+        "amount": 0.0,
+        "negation": 0.0,
+        "swapped": 0.0,
+        "timing": 0.0,
+        "same-verb": 0.0,
+        "none": 0.0
+      }
+    }
+  ]
+}
