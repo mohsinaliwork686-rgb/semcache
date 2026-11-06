@@ -272,10 +272,12 @@ row now tests what must hold instead.
 
 ## 12. Definition of done
 
-- [ ] Public repo, description and topics
-- [ ] This plan, committed before the code
-- [ ] The labelled question set committed before any embedding code
-- [ ] README with the trade-off chart at the top, and how to choose a threshold
-- [ ] Every row of the test plan covered; both stores run the same suite
-- [ ] CI green: lint, tests on Python 3.11 to 3.14 with a real Redis 8, other operating systems, a benchmark smoke run
-- [ ] At least 10 commits, one logical change each
+- [x] Public repo, description and topics
+- [x] This plan, committed before the code
+- [x] The labelled question set committed before any embedding code
+- [x] README with the trade-off chart at the top, and how to choose a threshold
+- [x] Every row of the test plan covered; both stores run the same suite
+- [x] CI green: lint, tests on Python 3.11 to 3.14 with a real Redis 8, other operating systems, a benchmark smoke run
+- [x] At least 10 commits, one logical change each
+
+Shipped Friday 6 November 2026.
