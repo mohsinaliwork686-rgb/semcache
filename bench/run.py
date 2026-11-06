@@ -2,6 +2,7 @@
 
     python -m bench.run                 # both models, 5 shuffled runs each
     python -m bench.run --smoke         # one model, one run, three thresholds (CI)
+    python -m bench.run --questions my.json --out my-results   # your own labelled questions
 
 Writes one JSON file per model to bench/results/. Needs `pip install -e ".[local]"`.
 """
@@ -16,7 +17,7 @@ from pathlib import Path
 
 import numpy as np
 
-from bench.replay import NO_NEAR_MISS, load_queries, replay, shuffled
+from bench.replay import NO_NEAR_MISS, QUESTIONS, load_queries, replay, shuffled
 from semcache import LocalEmbedder
 from semcache.similarity import normalize
 
@@ -48,8 +49,8 @@ def embed_all(model: str, texts: list[str]) -> tuple[dict[str, np.ndarray], floa
     return vectors, statistics.median(timings)
 
 
-def sweep(model_key: str, runs: int, thresholds: list[float]) -> dict:
-    queries = load_queries()
+def sweep(model_key: str, runs: int, thresholds: list[float], questions: Path = QUESTIONS) -> dict:
+    queries = load_queries(questions)
     vectors, embed_seconds = embed_all(MODELS[model_key], [q.text for q in queries])
     rows = []
     for threshold in thresholds:
@@ -81,7 +82,9 @@ def sweep(model_key: str, runs: int, thresholds: list[float]) -> dict:
                 "seconds_saved": model_calls_saved * MODEL_SECONDS_PER_CALL - embedding_cost,
                 "dollars_saved": model_calls_saved * MODEL_DOLLARS_PER_CALL,
                 "false_hits_per_1000_by_kind": {
-                    kind: 1000 * by_kind_false[kind] / by_kind_queries[kind] for kind in KINDS
+                    kind: 1000 * by_kind_false[kind] / by_kind_queries[kind]
+                    for kind in KINDS
+                    if by_kind_queries[kind]
                 },
             }
         )
@@ -125,6 +128,7 @@ def main() -> None:
     parser.add_argument("--models", nargs="+", choices=list(MODELS), default=list(MODELS))
     parser.add_argument("--runs", type=int, default=5)
     parser.add_argument("--smoke", action="store_true", help="one model, one run, three thresholds")
+    parser.add_argument("--questions", type=Path, default=QUESTIONS, help="your own question set")
     parser.add_argument("--out", type=Path, default=RESULTS)
     args = parser.parse_args()
 
@@ -134,7 +138,7 @@ def main() -> None:
 
     args.out.mkdir(parents=True, exist_ok=True)
     for key in models:
-        result = sweep(key, runs, thresholds)
+        result = sweep(key, runs, thresholds, args.questions)
         print_summary(result)
         if not args.smoke:
             (args.out / f"{key}.json").write_text(json.dumps(result, indent=2) + "\n")
