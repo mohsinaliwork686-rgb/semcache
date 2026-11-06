@@ -192,7 +192,8 @@ to it run code. An answer that isn't JSON-serialisable is simply not cached, and
 
 ### Without the decorator, or with your own embedder
 
-`cache.lookup(question)` and `cache.store(question, answer)` work anywhere a decorator doesn't. An
+`cache.lookup(question)` and `cache.store(question, answer)` work anywhere a decorator doesn't, such
+as in front of a router like [llm-router](https://github.com/mohsinaliwork686-rgb/llm-router). An
 embedder is anything that turns a list of strings into vectors, so `sentence-transformers` is one line:
 
 ```python
