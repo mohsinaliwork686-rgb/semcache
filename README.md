@@ -217,7 +217,8 @@ cache = SemanticCache(threshold=0.9, embedder=SentenceTransformer("all-MiniLM-L6
 - **The model is simulated.** Time and money saved scale with the figures above. Embedding time is
   real, and is subtracted.
 
-To reproduce it, run `python -m bench.run` and then `python -m bench.chart`. A full run takes under a
+To reproduce it from a clone, install with `pip install -e ".[local,bench]"` (the charts need
+matplotlib), then run `python -m bench.run` and `python -m bench.chart`. A full run takes under a
 minute, and the raw results are in [bench/results](bench/results). CI runs a short version on the
 real model on every push, and its counts match a run on a Mac.
 
@@ -235,7 +236,7 @@ python -m venv .venv && source .venv/bin/activate
 pip install -e ".[local,redis,bench,dev]"
 pytest                                                # the Redis tests skip without Redis
 docker run -d -p 6379:6379 redis:8
-REDIS_URL=redis://localhost:6379/0 pytest             # all 110 tests
+REDIS_URL=redis://localhost:6379/0 SEMCACHE_REAL_MODEL=1 pytest   # all 110 tests, with the real model
 ```
 
 The design and the reasons behind it are in [docs/IMPLEMENTATION_PLAN.md](docs/IMPLEMENTATION_PLAN.md).
